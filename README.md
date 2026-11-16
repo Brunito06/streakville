@@ -7,7 +7,7 @@
 Every day of your year becomes a building. The more you commit, the taller it gets.
 Cars drive down the avenues, the sun sets, the windows light up at night.
 
-<img src="assets/preview-indigo.svg" alt="Streakville preview" width="100%">
+<img src="assets/preview.svg" alt="Streakville preview" width="100%">
 
 <sub>See it live on <a href="https://github.com/Brunito06">@Brunito06's profile</a>.</sub>
 
@@ -83,11 +83,11 @@ That's it. Your city updates by itself every day. 🎉
 
 | `indigo` | `green` | `amber` |
 | --- | --- | --- |
-| <img src="assets/preview-indigo.svg" width="260"> | <img src="assets/preview-green.svg" width="260"> | <img src="assets/preview-amber.svg" width="260"> |
+| <img src="assets/themes/indigo.png" width="260" alt="indigo theme"> | <img src="assets/themes/green.png" width="260" alt="green theme"> | <img src="assets/themes/amber.png" width="260" alt="amber theme"> |
 | **`purple`** | **`pink`** | **`red`** |
-| <img src="assets/preview-purple.svg" width="260"> | <img src="assets/preview-pink.svg" width="260"> | <img src="assets/preview-red.svg" width="260"> |
+| <img src="assets/themes/purple.png" width="260" alt="purple theme"> | <img src="assets/themes/pink.png" width="260" alt="pink theme"> | <img src="assets/themes/red.png" width="260" alt="red theme"> |
 | **`teal`** | **`cyan`** | **`mono`** |
-| <img src="assets/preview-teal.svg" width="260"> | <img src="assets/preview-cyan.svg" width="260"> | <img src="assets/preview-mono.svg" width="260"> |
+| <img src="assets/themes/teal.png" width="260" alt="teal theme"> | <img src="assets/themes/cyan.png" width="260" alt="cyan theme"> | <img src="assets/themes/mono.png" width="260" alt="mono theme"> |
 
 ### Your own colour
 
