@@ -1,0 +1,67 @@
+name: Streakville
+description: Turn your GitHub contributions into an animated isometric city for your profile README.
+author: Brunito06
+branding:
+  icon: home
+  color: blue
+
+inputs:
+  github_user_name:
+    description: GitHub username whose contributions are drawn.
+    required: false
+    default: ${{ github.repository_owner }}
+  output:
+    description: Path of the SVG file to generate.
+    required: false
+    default: dist/streakville.svg
+  theme:
+    description: "Colour theme: indigo, green, amber, purple, pink, red, teal, cyan or mono."
+    required: false
+    default: indigo
+  color:
+    description: "Custom colour in hex (e.g. #ff6600). Overrides theme."
+    required: false
+    default: ""
+  lang:
+    description: "Language of the labels: en or es."
+    required: false
+    default: en
+  github_token:
+    description: Token used to read the contribution calendar.
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Fetch contributions
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github_token }}
+        CC_USER: ${{ inputs.github_user_name }}
+      run: |
+        gh api graphql \
+          -f query='query($login:String!){ user(login:$login){ contributionsCollection { contributionCalendar { weeks { contributionDays { date contributionCount weekday } } } } } }' \
+          -f login="$CC_USER" > "$RUNNER_TEMP/streakville.json"
+        days=$(jq '[.data.user.contributionsCollection.contributionCalendar.weeks[]?.contributionDays[]?] | length' "$RUNNER_TEMP/streakville.json")
+        if [ -z "$days" ] || [ "$days" -eq 0 ]; then
+          echo "::error::GitHub returned no contributions for '$CC_USER'. Check the username."
+          cat "$RUNNER_TEMP/streakville.json"
+          exit 1
+        fi
+        echo "Days received: $days"
+
+    - name: Build the city
+      shell: bash
+      env:
+        CC_USER: ${{ inputs.github_user_name }}
+        CC_OUT: ${{ inputs.output }}
+        CC_THEME: ${{ inputs.theme }}
+        CC_COLOR: ${{ inputs.color }}
+        CC_LANG: ${{ inputs.lang }}
+      run: |
+        mkdir -p "$(dirname "$CC_OUT")"
+        node "$GITHUB_ACTION_PATH/src/city.mjs" \
+          --out "$CC_OUT" --data "$RUNNER_TEMP/streakville.json" \
+          --user "$CC_USER" --theme "$CC_THEME" --color "$CC_COLOR" --lang "$CC_LANG"
+        test -s "$CC_OUT"

@@ -1,0 +1,28 @@
+name: Streakville
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # once a day
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Brunito06/streakville@v1
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          output: dist/streakville.svg
+          theme: indigo # indigo · green · amber · purple · pink · red · teal · cyan · mono
+          # color: "#ff6600" # or any colour you like (overrides theme)
+          lang: en # en · es
+
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
